@@ -1053,7 +1053,7 @@ def vm_create():
     run(command)
 
     # Give some time to machine boot
-    time.sleep(300)
+    time.sleep(400)
 
     # Fetch Ip information via ping only when not using VLAN Bridges as we
     # know the VM's Ip address beforehand.
