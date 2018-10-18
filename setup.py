@@ -42,7 +42,6 @@ setup(
         'beautifulsoup4',
         'Fabric3',
         'lxml',
-        'pycurl',
         'pytest',
         'python-bugzilla==1.2.2',
         'requests',
