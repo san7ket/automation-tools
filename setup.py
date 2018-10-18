@@ -1,12 +1,29 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+import os
 try:
     from setuptools import setup
+    from setuptools.command.install import install
 except ImportError:
     from distutils.core import setup
+    from distutils.command.install import install
 
 with open('README.rst', 'r') as f:
     readme = f.read()
+
+
+class PycurlInstall(install):
+    def run(self):
+        if os.environ['PYCURL_SSL_LIBRARY'] == 'openssl':
+            os.system(
+                'pip install --compile --install-option="--with-openssl" '
+                'pycurl')
+        elif os.environ['PYCURL_SSL_LIBRARY'] == 'nss':
+            os.system(
+                'pip install --compile --install-option="--with-nss" pycurl')
+        else:
+            print("No openssl or nss library")
+        install.run(self)
 
 setup(
     name='automation_tools',
@@ -16,6 +33,7 @@ setup(
     author=u'Elyézer Rezende',
     author_email='erezende@redhat.com',
     url='https://github.com/SatelliteQE/automation-tools',
+    cmdclass=dict(install=PycurlInstall),
     packages=['automation_tools', 'automation_tools/satellite6'],
     package_data={'': ['LICENSE']},
     package_dir={'automation_tools': 'automation_tools'},
