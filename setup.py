@@ -15,12 +15,12 @@ with open('README.rst', 'r') as f:
 class PycurlInstall(install):
     def run(self):
         if os.system('curl --version | grep NSS 2>/dev/null') != 0:
-            os.environ['PYCURL_SSL_LIBRARY'] == 'openssl'
+            os.environ['PYCURL_SSL_LIBRARY'] = 'openssl'
             os.system(
                 'pip install --compile --install-option="--with-openssl" '
                 'pycurl')
         else:
-            os.environ['PYCURL_SSL_LIBRARY'] == 'nss'
+            os.environ['PYCURL_SSL_LIBRARY'] = 'nss'
             os.system(
                 'pip install --compile --install-option="--with-nss" pycurl')
         install.run(self)
